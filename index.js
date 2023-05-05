@@ -23,3 +23,13 @@ console.log(user.getCount());
 
 var func = user.getCount;
 console.log(func());
+
+// todo:构造函数
+
+function Person(){
+
+}
+
+var person = new Person();
+person.name = 'LLF';
+console.log(person); // LLF
