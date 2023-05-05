@@ -2,5 +2,11 @@ function spacify(str) {
     return str.split('').join(' ')
 }
 
-console.log(spacify('hello world')
-    , 111)
+console.log(spacify('hello world'))
+
+
+function log() {
+    console.log.apply(console, arguments);
+}
+
+log('hello');
