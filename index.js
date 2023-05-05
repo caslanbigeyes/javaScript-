@@ -14,8 +14,8 @@ log('hello');
 
 // todo:this指向
 var user = {
-    count:1,
-    getCount:function(){
+    count: 1,
+    getCount: function () {
         return this.count
     }
 }
@@ -28,16 +28,45 @@ console.log(func());
 // ? 对象的原型是不是prototype ?
 
 
-function Person(){
+function Person() {
 
 }
 
-var person1= new Person();
+var person1 = new Person();
 person1.name = 'LLF';
-console.log(person1.name,person1.prototype); // LLF
- var person2 = new Person();
+console.log(person1.name, person1.prototype); // LLF
+var person2 = new Person();
 person2.name = 'ZXX';
-console.log(person2.name,person2.prototype); // ZXX
+console.log(person2.name, person2.prototype); // ZXX
 
 
+// todo: constructor
+function Person() {
+
+}
+
+var person1 = new Person();
+
+console.log(Person === Person.prototype.constructor);
+
+// todo: 实例与原型
+function Person() {
+
+}
+
+Person.prototype.name = 'LLF';
+var person1 = new Person();
+person1.name = 'ZXX';
+delete person1.name;
+console.log(person1.name) // LLF
+
+
+// todo:原型对象
+
+var obj = new Object();
+obj.name = 'LLF'
+console.log(obj.name) // LLF
+
+console.log(obj.__proto__ === Object.prototype) // true
+console.log(Object.prototype.__proto__ === null) // true
 
