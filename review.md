@@ -107,6 +107,58 @@
 
 #### 2. prototype
 
-每个函数都有一个 Prototype 属性
+// ***错误理解***
+
+**每个函数都有一个 Prototype 属性, 同时Object也有**
 
 ![这是图片](/images/1.png)
+
+// ***更正***
+**只有函数对象才有prototype属性, 普通的实例对象是没有的**
+
+
+
+
+                function Person(){
+
+                }
+
+                var person1= new Person();
+                person1.name = 'LLF';
+                console.log(person1.name,person1.prototype); // LLF undefined
+                 var person2 = new Person();
+                person2.name = 'ZXX';
+                console.log(person2.name,person2.prototype); // ZXX
+
+> 函数的prototype到底指向什么呢?是这个函数的原型?
+
+其实,函数的prototype属性指向一个对象,这个对象正是调用该构造函数而创建的实例的原型,也正是person1和person2的原型  
+person1和person2 都是Person的一个实例,但不是一个函数, 因此没有prototype属性,他们只是
+Function的一个实例, 而Person是一个函数,它们都有prototype属性,
+那什么是原型呢?                         
+可以这样理解:每一个javaScript对象(null除外)在创建的时候与之关联另一个对象,这个对象就是我们所说的原型,每一个对象都从原型中继承属性
+
+    
+![这是图片](/images/4.png)
+
+
+这里要求清楚两个概念
+1. js分为函数对象和普通对象,每个对象都有_proto_属性,但只有函数才有Prototype属性
+
+* 此处补充一个开发技巧
+![这是图片](/images/3.png)
+
+
+#### 3. __proto__
+> 这是每个javaScript对象都具有的一个属性, 叫_proto_,这个属性会指向该对象的原型
+
+
+                function Person() {
+
+                }
+                var person = new Person();
+                console.log(person.__proto__ === Person.prototype); // true
+
+用一张图表示实例原型和构造函数之间的关系
+
+![这是图片](/images/6.png)
