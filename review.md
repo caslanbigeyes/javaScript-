@@ -207,6 +207,10 @@ Function 的一个实例, 而 Person 是一个函数,它们都有 prototype 属�
             person1.name = 'ZXX';
             delete person1.name;
             console.log(person1.name) //LLF
+            // ! 这里需要讲一个很绕的点: 实例的隐式原型是构造函数的原型,构造函数的原型的原型又是Object的原型,Object的原型的原型又是null
+            console.log(person1.__proto__ === Person.prototype, 222222222) // true
+            console.log(Person.prototype.__proto__ === Object.prototype, 222222222) // true
+            console.log(Object.prototype.__proto__ === null, 222222222) // true
 
 # 7.原型的原型
 
@@ -255,19 +259,170 @@ Function 的一个实例, 而 Person 是一个函数,它们都有 prototype 属�
 
             person.constructor === Person.prototype.**proto** //true
 
+#### 2.**proto**
 
-#### 2.__proto__
-
->其次是 __proto__ ，绝大部分浏览器都支持这个非标准的方法访问原型，
-然而它并不存在于 Person.prototype 中，
-实际上，它是来自于 Object.prototype ，
-与其说是一个属性，不如说是一个 getter/setter，
-当使用 obj.__proto__ 时，可以理解成返回了 Object.getPrototypeOf(obj)。
-
-
+> 其次是 **proto** ，绝大部分浏览器都支持这个非标准的方法访问原型，
+> 然而它并不存在于 Person.prototype 中，
+> 实际上，它是来自于 Object.prototype ，
+> 与其说是一个属性，不如说是一个 getter/setter，
+> 当使用 obj.**proto** 时，可以理解成返回了 Object.getPrototypeOf(obj)。
 
 讲到这里 想到继承的概念, 每一个对象都会从原型链上继承属性
 实际上真的是这样吗?
 继承意味着复制操作，然而 JavaScript 默认并不会复制对象的属性，
 相反，JavaScript 只是在两个对象之间创建一个关联，
 这样，一个对象就可以通过委托访问另一个对象的属性和函数，所以与其叫继承，委托的说法反而更准确些。
+
+# 10.继承
+
+> ES5 prototype 寄生组合式继承
+
+            function SuperType(name) {
+                this.name = name
+            }
+
+            SuperType.prototype.sayName = function() {
+                console.log(this.name)
+            }
+
+            function SubType(name, age) {
+                SuperType.call(this, name)
+                this.age = age
+            }
+
+            function extendPrototype(Sub, Super) {
+                Sub.prototype = Object.create(Super.prototype)
+                Sub.prototype.constructor = Sub
+            }
+
+            extendPrototype(SubType, SuperType)
+
+            SubType.prototype.sayAge = function() {
+                console.log(this.age)
+            }
+
+            const sub = new SubType('tom', 18)
+            sub.sayAge() // 18
+            sub.sayName() // tom
+
+> ES6 class 继承
+
+            class SuperType {
+                constructor(name){
+                    this.name = name;
+                }
+
+                sayName(){
+                    console.log(this.name)
+                }
+            }
+
+            class subType extends SuperType{
+                constructor(name,age){
+                    super(name)
+                    this.age = age;
+                }
+                sayAge(){
+                    console.log(this.age);
+                }
+            }
+
+            const sub = new SubType('tom',18);
+            console.log( sub.sayAge(),sub.sayName()) // 18 tom
+
+# 11.闭包
+
+> 正常没有闭包的情况
+
+// 中间别的开发人员对 a 重新赋值的话 就会导致的 a 的值改变, 被全局污染, 如何创建一个私有变量,只能被内部访问,不能被外部访问, 这时就产生了闭包
+
+闭包的作用:可以使变量驻留在内存, 不被回收
+
+            let a = 10
+
+            function count(){
+                a++;
+                console.log(a)
+            }
+
+            count(); 11
+            count(); 12
+            count(); 13
+
+闭包:
+
+let a = 10
+
+            function count(){
+                a++;
+                return ()=>{
+                    console.log(a);
+                }
+            }
+
+            count(); 11
+            count(); 12
+            count(); 13
+
+> 闭包是指有权访问另一个函数中变量的函数
+
+            function SayHi(name){
+                return ()=>{
+                    console.log(`hi~~${name}`)
+                }
+            }
+
+            const func  = SayHi('LLF');
+            console.log(func());
+
+虽然 SayHi 函数已经执行完, 但其活动对象并没有销毁,func 函数仍然拿着 SayHi 函数中的变量 name,这就是闭包
+但也因为闭包引用着另一个函数的变量，导致另一个函数即使不使用了也无法销毁，
+所以闭包使用过多，会占用较多的内存，这也是一个副作用。
+
+> 利用闭包实现私有属性
+
+const text =(function(){
+let age = 0;
+return {
+getVal(){return value};
+setVal(val){value = val};
+}
+}())
+
+
+                // todo: 闭包类型考题
+                //1.有一个函数，参数是一个函数，返回值也是一个函数，返回的函数功能和入参的函数相似，但这个函数只能执行3次，再次执行无效，如何实现
+
+                const bibaoFunc = (fn) => {
+                    let times = 0;
+                    return () => {
+                        if (times++ < 3) {
+                            fn()
+                        }
+                    }
+                }
+
+                function fn() {
+                    console.log('大师 你好')
+                }
+                const testFunc = bibaoFunc(fn);
+                console.log(testFunc(), 11);// 大师 你好
+                console.log(testFunc(), 22);// 大师 你好
+                console.log(testFunc(), 33);// 大师 你好
+                console.log(testFunc(), 44);// undefined
+                console.log(testFunc(), 55);// undefined
+
+
+                //2.实现add函数,让add(a)(b)和add(a,b)两种调用结果相同
+
+
+                function add(a, b) {
+                    if (b === undefined) {
+                        return (x) => {
+                            return a + x;
+                        }
+                    }
+                    return a + b
+                }
+
+                console.log(add(1)(2) === add(1, 2))   // true
