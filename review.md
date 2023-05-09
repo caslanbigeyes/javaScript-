@@ -381,13 +381,13 @@ let a = 10
 
 > 利用闭包实现私有属性
 
-const text =(function(){
-let age = 0;
-return {
-getVal(){return value};
-setVal(val){value = val};
-}
-}())
+                const text =(function(){
+                let age = 0;
+                return {
+                getVal(){return value};
+                setVal(val){value = val};
+                }
+                }())
 
 
                 // todo: 闭包类型考题
@@ -415,7 +415,7 @@ setVal(val){value = val};
 
                 //2.实现add函数,让add(a)(b)和add(a,b)两种调用结果相同
 
-
+                // 普通函数实现
                 function add(a, b) {
                     if (b === undefined) {
                         return (x) => {
@@ -426,3 +426,107 @@ setVal(val){value = val};
                 }
 
                 console.log(add(1)(2) === add(1, 2))   // true
+
+                // 柯里化实现
+
+> 讲一下柯里化
+> 接收多个参数变成一个单一的参数(函数第一个参数)的函数, 并且返回接受余下的参数而且返回结果的新函数的技术
+
+简单来说,就是固定一些参数,返回一个接受剩余参数的函数. 实质上就是利用闭包返沪一个延迟执行函数
+
+> 举例
+
+要实现 add(num1,num2)到 add(num1)(num2)的改变,
+首先要做的就是将 add 的 return 改造成一个闭包函数,
+这样才能连续执行,并且在执行第二个函数的时候,访问到 num1 的参数
+
+                function curriedAdd(num1) {
+                return function(num2) {
+                return num1 + num2; // 实际上这就是 add(num1, num2);
+                }
+                }
+
+                function add(num1, num2) {
+                return num1 + num2;
+                }
+
+                function curry(fn,num1){
+                return function(num2){
+                return fn(num1,num2)
+                }
+                }
+
+                const curriedAdd = curry(add,1);
+
+                curriedAdd(2);
+
+                // 多个参数的实现 抽象一下
+
+                function curry(fn) {
+                    const curryArgs = Array.form(arguments).slice(1); // 排除第一个fn参数
+                    return () => {
+                        const funcArgs = Array.from(arguments); // 获取回调函数的参数 也就是num2
+                        return fn(...curryArgs, ...funcArgs);
+                    }
+                }
+
+                // 继续优化代码
+
+                function curry(fn, ...curryArgs) {
+                    return (...funcArgs) => {
+                        return fn(...curryArgs, ...funcArgs);
+                    }
+                }
+
+> 拓展一下，怎样实现 add(num1)(num2)(num3)(num4)...、add(num1, num2)(num3)(num4)、add(num1)(num2)(num3, num4)()呢？
+
+思路: 递归  1.找出口
+这里想到封装柯里化函数
+
+// todo:柯里化好处 
+                    // 举例  
+
+                    let list = [
+                        {
+                            name:'lucy'
+                        },
+                        {
+                            name:'jack'
+                        }
+                    ]
+
+                    // 取list里的所有name  
+                    // 常规思路
+                    let names = list.map(function(item) {
+                        return item.name;
+                    })
+
+
+                    let prop  = curry(function(key,obj){
+                        console.log(obj,22222)
+                        return obj[key];
+                    })
+
+                    let  CurryNames = list.map(prop('name'))
+
+                    // 柯里化函数封装
+
+                    function curry(fn, len = fn.length) {
+                        return _curry.call(this, fn, len)
+                    }
+
+                    function _curry(fn, len, ...args) {
+                        return function (...params) {
+                            let _args = [...args, ...params];
+                            if (_args.length >= len) {
+                                return fn.apply(this, _args)
+                            } else {
+                                return _curry.call(this, fn, len, ..._args);
+                            }
+                        }
+                    }
+                    let _fn = curry(function (a, b, c, d, e) {
+                        console.log(a, b, c, d, e)
+                    });
+
+                    console.log(_fn(1)(2)(3, 4, 5), 222) // print: 1,2,3,4,5

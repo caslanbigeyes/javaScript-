@@ -189,7 +189,7 @@ console.log(testFunc(), 55);// undefined
 
 //2.实现add函数,让add(a)(b)和add(a,b)两种调用结果相同
 
-
+// 普通函数实现
 function add(a, b) {
     if (b === undefined) {
         return (x) => {
@@ -200,3 +200,86 @@ function add(a, b) {
 }
 
 console.log(add(1)(2) === add(1, 2))   // true
+
+// todo:柯里化实现
+function addFunc(num1, num2) {
+    return num1 + num2;
+}
+
+function curry(fn, num1) {
+    return function (num2) {
+        return fn(num1, num2)
+    }
+}
+
+const curriedAdd = curry(addFunc, 1);
+
+console.log(curriedAdd(2))
+
+
+// todo: 多个参数的实现 抽象一下 
+
+function curry(fn) {
+    const curryArgs = Array.form(arguments).slice(1); // 排除第一个fn参数
+    return () => {
+        const funcArgs = Array.from(arguments); // 获取回调函数的参数 也就是num2
+        return fn(...curryArgs, ...funcArgs);
+    }
+}
+
+// 继续优化代码
+
+function curry(fn, ...curryArgs) {
+    return (...funcArgs) => {
+        return fn(...curryArgs, ...funcArgs);
+    }
+}
+
+
+// todo:柯里化好处 
+// 举例  
+
+let list = [
+    {
+        name:'lucy'
+    },
+    {
+        name:'jack'
+    }
+]
+
+// 取list里的所有name  
+// 常规思路
+let names = list.map(function(item) {
+    return item.name;
+  })
+
+
+let prop  = curry(function(key,obj){
+    console.log(obj,22222)
+    return obj[key];
+})
+
+let  CurryNames = list.map(prop('name'))
+
+// 柯里化函数封装
+
+function curry(fn, len = fn.length) {
+    return _curry.call(this, fn, len)
+}
+
+function _curry(fn, len, ...args) {
+    return function (...params) {
+        let _args = [...args, ...params];
+        if (_args.length >= len) {
+            return fn.apply(this, _args)
+        } else {
+            return _curry.call(this, fn, len, ..._args);
+        }
+    }
+}
+let _fn = curry(function (a, b, c, d, e) {
+    console.log(a, b, c, d, e)
+});
+
+console.log(_fn(1)(2)(3, 4, 5), 222) // print: 1,2,3,4,5
