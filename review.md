@@ -530,3 +530,45 @@ let a = 10
                     });
 
                     console.log(_fn(1)(2)(3, 4, 5), 222) // print: 1,2,3,4,5
+
+
+
+# 12.AjAX  
+>是客户端创建异步web应用的一种web开发技术
+
+                const xhr = new XMLHttpRequest();
+                xhr.onLoad = (res)=>{
+                    if(xhr.status===200) {
+                        console.log(xhr.response)
+                    }
+                }
+
+                xhr.open('get', 'https://api.github.com/')
+                xhr.send()
+
+
+
+除了ajax交互, 还有别的方式交互 例如form , script的src, background的url, fetch, websocket
+
+
+#### ajax 
+优点:
+* 1.交互性更好。来自服务器的新内容可以动态更改，无需重新加载整个页面。
+* 2.减少与服务器的连接，因为脚本和样式只需要被请求一次。
+* 3.状态可以维护在一个页面上。JavaScript 变量和 DOM 状态将得到保持，因为主容器页面未被重新加载。
+* 4.基本上包括大部分 SPA 的优点。
+
+缺点:
+* 1.动态网页很难收藏。
+* 2.如果 JavaScript 已在浏览器中被禁用，则不起作用。
+* 3.有些网络爬虫不执行 JavaScript，也不会看到 JavaScript 加载的内容。
+* 4.基本上包括大部分 SPA 的缺点。
+
+#### ajax 和 fetch 区别
+
+* 1.ajax 通过 XMLHttpRequest封装,用起来 麻烦 , fetch 来源于Es6
+* 2.使用fetch 无法取消请求 基于promise , promise无法做到
+* 3.默认情况, fetch 不会发送 或 接收cookies
+* 4.fetch没有办法原生监测请求的进度，而XMLHttpRequest可以
+* 5.fetch只对网络请求报错，对400，500都当做成功的请求，需要封装去处理
+* 6.fetch由于是ES6规范，兼容性上比不上XMLHttpRequest
