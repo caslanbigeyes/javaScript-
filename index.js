@@ -283,3 +283,32 @@ let _fn = curry(function (a, b, c, d, e) {
 });
 
 console.log(_fn(1)(2)(3, 4, 5), 222) // print: 1,2,3,4,5
+
+
+// todo bind封装
+
+Function.prototype.myBind = function(context,...args){
+    const self = this;
+    return function(){
+        return self.call(context,args)
+    }
+}
+
+var obj1 ={
+    name:'LLF'
+}
+
+var name  = 'ZXX'
+
+function bindTest(){
+    return function(){
+        return this.name;
+    }
+}
+// let bindName  =  bindTest();
+// console.log(bindName()) // ZXX
+
+let bindName  =  bindTest().myBind(obj1);
+console.log(bindName()) // LLF
+
+

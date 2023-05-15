@@ -41,6 +41,32 @@
 2. call，apply，bind 使用时，传入的第一个参数都是用来传递 this 的指向的，也就是对上下文的指定
 3. call，apply，bind 都是可以传入多个参数，不同的是，call 和 bind 的后续参数都是按照顺序传参，而 apply 的传参类型是数组；bind 的参数可以在函数执行的时候再次添加。
 
+>举例
+                var obj1 ={
+                    name:'LLF'
+                }
+
+                let name  = 'ZXX'
+
+                function bindTest(){
+                    console.log(this.name);
+                }
+                let bindName  =  bindTest();
+                console.log(bindName) // ZXX
+
+                let bindName  =  bindTest().bind(obj1);
+                console.log(bindName) // LLF
+
+> bind 实现
+
+Function.prototype.myBind = function(context,...args){
+    const self = this;
+    return function(){
+        return self.call(context,args)
+    }
+}
+
+
 # 3.上下文
 
 > 考察上下文 this 的理解
@@ -572,3 +598,6 @@ let a = 10
 * 4.fetch没有办法原生监测请求的进度，而XMLHttpRequest可以
 * 5.fetch只对网络请求报错，对400，500都当做成功的请求，需要封装去处理
 * 6.fetch由于是ES6规范，兼容性上比不上XMLHttpRequest
+
+
+
