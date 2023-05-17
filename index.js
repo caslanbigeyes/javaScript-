@@ -322,3 +322,398 @@ let obj2 = obj1;
 obj2.a = 4;
 
 console.log(obj1.a); // 4
+
+
+
+
+// todo: 应用场景 更新数组child
+
+const arr = [
+    {
+      "children": [
+        {
+          "pkId": "__-dHypQyE5nPIp7bhZsnSpAw-__",
+          "strategyLineId": null,
+          "tenantId": 30,
+          "nodeConfigId": 12981,
+          "nodeConfigIndexAbc": "A",
+          "nodeConfigIndex": 0,
+          "nodeConfigCode": "10",
+          "nodeConfigName": "接收并入库",
+          "actionCode": "WAITING",
+          "actionName": "待执行",
+          "actionMeaning": null,
+          "authorityCode": "QUERY,UPDATE,",
+          "actionCount": null,
+          "reverseEnable": 1
+        },
+        {
+          "pkId": "__-HDjZEBicyaxTTw7nAmBqvg-__",
+          "strategyLineId": null,
+          "tenantId": 30,
+          "nodeConfigId": 12981,
+          "nodeConfigIndexAbc": "A",
+          "nodeConfigIndex": 0,
+          "nodeConfigCode": "10",
+          "nodeConfigName": "接收并入库",
+          "actionCode": "DOING",
+          "actionName": "执行中",
+          "actionMeaning": null,
+          "authorityCode": "QUERY,UPDATE,",
+          "actionCount": null,
+          "reverseEnable": 1
+        },
+        {
+          "pkId": "__-ejKZfuGYF-mGB3NjX94cPQ-__",
+          "strategyLineId": null,
+          "tenantId": 30,
+          "nodeConfigId": 12981,
+          "nodeConfigIndexAbc": "A",
+          "nodeConfigIndex": 0,
+          "nodeConfigCode": "10",
+          "nodeConfigName": "接收并入库",
+          "actionCode": "FINISHED",
+          "actionName": "已完成",
+          "actionMeaning": null,
+          "authorityCode": "QUERY,UPDATE,",
+          "actionCount": null,
+          "reverseEnable": 1
+        }
+      ],
+    },
+    {
+      "children": [
+        {
+          "pkId": "__-0vckJjtO1v2Iqeb6-WcR2g-__",
+          "strategyLineId": null,
+          "tenantId": 30,
+          "nodeConfigId": 12982,
+          "nodeConfigIndexAbc": "C",
+          "nodeConfigIndex": 1,
+          "nodeConfigCode": "20",
+          "nodeConfigName": "接收",
+          "actionCode": "WAITING",
+          "actionName": "待执行",
+          "actionMeaning": null,
+          "authorityCode": "QUERY,UPDATE,",
+          "actionCount": null,
+          "reverseEnable": 1
+        },
+        {
+          "pkId": "__-sE5b9crW1gl7kwKXcf7nxA-__",
+          "strategyLineId": null,
+          "tenantId": 30,
+          "nodeConfigId": 12982,
+          "nodeConfigIndexAbc": "C",
+          "nodeConfigIndex": 1,
+          "nodeConfigCode": "20",
+          "nodeConfigName": "接收",
+          "actionCode": "DOING",
+          "actionName": "执行中",
+          "actionMeaning": null,
+          "authorityCode": "QUERY,UPDATE,",
+          "actionCount": null,
+          "reverseEnable": 1
+        },
+        {
+          "pkId": "__-TOJ3Mi1964gl0xWu8H41qA-__",
+          "strategyLineId": null,
+          "tenantId": 30,
+          "nodeConfigId": 12982,
+          "nodeConfigIndexAbc": "C",
+          "nodeConfigIndex": 1,
+          "nodeConfigCode": "20",
+          "nodeConfigName": "接收",
+          "actionCode": "FINISHED",
+          "actionName": "已完成",
+          "actionMeaning": null,
+          "authorityCode": "QUERY,UPDATE,",
+          "actionCount": null,
+          "reverseEnable": 1
+        }
+      ],
+  
+    },
+  ]
+  
+  
+  
+  
+  const waitArr = [
+    {
+      "children": [
+        {
+          "pkId": "__-dHypQyE5nPIp7bhZsnSpAw-__",
+          "strategyLineId": null,
+          "tenantId": 30,
+          "nodeConfigId": 12981,
+          "nodeConfigIndexAbc": "A",
+          "nodeConfigIndex": 0,
+          "nodeConfigCode": "10",
+          "nodeConfigName": "接收并入库",
+          "actionCode": "WAITING",
+          "actionName": "待执行",
+          "actionMeaning": null,
+          "authorityCode": "QUERY,UPDATE,",
+          "actionCount": 10636,
+          "reverseEnable": 1
+        },
+        {
+          "pkId": "__-HDjZEBicyaxTTw7nAmBqvg-__",
+          "strategyLineId": null,
+          "tenantId": 30,
+          "nodeConfigId": 12981,
+          "nodeConfigIndexAbc": "A",
+          "nodeConfigIndex": 0,
+          "nodeConfigCode": "10",
+          "nodeConfigName": "接收并入库",
+          "actionCode": "DOING",
+          "actionName": "执行中",
+          "actionMeaning": null,
+          "authorityCode": "QUERY,UPDATE,",
+          "actionCount": null,
+          "reverseEnable": 1
+        },
+        {
+          "pkId": "__-ejKZfuGYF-mGB3NjX94cPQ-__",
+          "strategyLineId": null,
+          "tenantId": 30,
+          "nodeConfigId": 12981,
+          "nodeConfigIndexAbc": "A",
+          "nodeConfigIndex": 0,
+          "nodeConfigCode": "10",
+          "nodeConfigName": "接收并入库",
+          "actionCode": "FINISHED",
+          "actionName": "已完成",
+          "actionMeaning": null,
+          "authorityCode": "QUERY,UPDATE,",
+          "actionCount": null,
+          "reverseEnable": 1
+        }
+      ],
+    },
+    {
+      "children": [
+        {
+          "pkId": "__-0vckJjtO1v2Iqeb6-WcR2g-__",
+          "strategyLineId": null,
+          "tenantId": 30,
+          "nodeConfigId": 12982,
+          "nodeConfigIndexAbc": "C",
+          "nodeConfigIndex": 1,
+          "nodeConfigCode": "20",
+          "nodeConfigName": "接收",
+          "actionCode": "WAITING",
+          "actionName": "待执行",
+          "actionMeaning": null,
+          "authorityCode": "QUERY,UPDATE,",
+          "actionCount": 2999,
+          "reverseEnable": 1
+        },
+        {
+          "pkId": "__-sE5b9crW1gl7kwKXcf7nxA-__",
+          "strategyLineId": null,
+          "tenantId": 30,
+          "nodeConfigId": 12982,
+          "nodeConfigIndexAbc": "C",
+          "nodeConfigIndex": 1,
+          "nodeConfigCode": "20",
+          "nodeConfigName": "接收",
+          "actionCode": "DOING",
+          "actionName": "执行中",
+          "actionMeaning": null,
+          "authorityCode": "QUERY,UPDATE,",
+          "actionCount": null,
+          "reverseEnable": 1
+        },
+        {
+          "pkId": "__-TOJ3Mi1964gl0xWu8H41qA-__",
+          "strategyLineId": null,
+          "tenantId": 30,
+          "nodeConfigId": 12982,
+          "nodeConfigIndexAbc": "C",
+          "nodeConfigIndex": 1,
+          "nodeConfigCode": "20",
+          "nodeConfigName": "接收",
+          "actionCode": "FINISHED",
+          "actionName": "已完成",
+          "actionMeaning": null,
+          "authorityCode": "QUERY,UPDATE,",
+          "actionCount": null,
+          "reverseEnable": 1
+        }
+      ],
+  
+    },
+  ]
+  
+  
+  
+  const doingArr = [
+    {
+      "children": [
+        {
+          "pkId": "__-dHypQyE5nPIp7bhZsnSpAw-__",
+          "strategyLineId": null,
+          "tenantId": 30,
+          "nodeConfigId": 12981,
+          "nodeConfigIndexAbc": "A",
+          "nodeConfigIndex": 0,
+          "nodeConfigCode": "10",
+          "nodeConfigName": "接收并入库",
+          "actionCode": "WAITING",
+          "actionName": "待执行",
+          "actionMeaning": null,
+          "authorityCode": "QUERY,UPDATE,",
+          "actionCount": null,
+          "reverseEnable": 1
+        },
+        {
+          "pkId": "__-HDjZEBicyaxTTw7nAmBqvg-__",
+          "strategyLineId": null,
+          "tenantId": 30,
+          "nodeConfigId": 12981,
+          "nodeConfigIndexAbc": "A",
+          "nodeConfigIndex": 0,
+          "nodeConfigCode": "10",
+          "nodeConfigName": "接收并入库",
+          "actionCode": "DOING",
+          "actionName": "执行中",
+          "actionMeaning": null,
+          "authorityCode": "QUERY,UPDATE,",
+          "actionCount": 9999,
+          "reverseEnable": 1
+        },
+        {
+          "pkId": "__-ejKZfuGYF-mGB3NjX94cPQ-__",
+          "strategyLineId": null,
+          "tenantId": 30,
+          "nodeConfigId": 12981,
+          "nodeConfigIndexAbc": "A",
+          "nodeConfigIndex": 0,
+          "nodeConfigCode": "10",
+          "nodeConfigName": "接收并入库",
+          "actionCode": "FINISHED",
+          "actionName": "已完成",
+          "actionMeaning": null,
+          "authorityCode": "QUERY,UPDATE,",
+          "actionCount": null,
+          "reverseEnable": 1
+        }
+      ],
+    },
+    {
+      "children": [
+        {
+          "pkId": "__-0vckJjtO1v2Iqeb6-WcR2g-__",
+          "strategyLineId": null,
+          "tenantId": 30,
+          "nodeConfigId": 12982,
+          "nodeConfigIndexAbc": "C",
+          "nodeConfigIndex": 1,
+          "nodeConfigCode": "20",
+          "nodeConfigName": "接收",
+          "actionCode": "WAITING",
+          "actionName": "待执行",
+          "actionMeaning": null,
+          "authorityCode": "QUERY,UPDATE,",
+          "actionCount": null,
+          "reverseEnable": 1
+        },
+        {
+          "pkId": "__-sE5b9crW1gl7kwKXcf7nxA-__",
+          "strategyLineId": null,
+          "tenantId": 30,
+          "nodeConfigId": 12982,
+          "nodeConfigIndexAbc": "C",
+          "nodeConfigIndex": 1,
+          "nodeConfigCode": "20",
+          "nodeConfigName": "接收",
+          "actionCode": "DOING",
+          "actionName": "执行中",
+          "actionMeaning": null,
+          "authorityCode": "QUERY,UPDATE,",
+          "actionCount": 88888,
+          "reverseEnable": 1
+        },
+        {
+          "pkId": "__-TOJ3Mi1964gl0xWu8H41qA-__",
+          "strategyLineId": null,
+          "tenantId": 30,
+          "nodeConfigId": 12982,
+          "nodeConfigIndexAbc": "C",
+          "nodeConfigIndex": 1,
+          "nodeConfigCode": "20",
+          "nodeConfigName": "接收",
+          "actionCode": "FINISHED",
+          "actionName": "已完成",
+          "actionMeaning": null,
+          "authorityCode": "QUERY,UPDATE,",
+          "actionCount": null,
+          "reverseEnable": 1
+        }
+      ],
+  
+    },
+  ]
+  const BL = (arr) => {
+    return arr.map(i => {
+      if (i.children) {
+        const children = i.children.map(item => {
+          return {
+            ...item,
+            title: `${item.actionName}(${item.actionCount})`,
+  
+          }
+        })
+        return {
+          ...i,
+          parentId: null,
+          pkId: i.nodeConfigId,
+          children,
+        }
+      }
+    })
+  }
+  
+  console.log(BL(arr))
+  console.log(BL(waitArr))
+  console.log(BL(doingArr))
+  
+  
+  
+  //  需要的结果  数组2的每个节点的children 待执行 替换数组1的children
+  
+  function deepClone(obj, hash = new WeakMap()) {
+    if (obj === null) return obj; // 如果是null或者undefined我就不进行拷贝操作
+    if (obj instanceof Date) return new Date(obj);
+    if (obj instanceof RegExp) return new RegExp(obj);
+    // 可能是对象或者普通的值  如果是函数的话是不需要深拷贝
+    if (typeof obj !== "object") return obj;
+    // 是对象的话就要进行深拷贝
+    if (hash.get(obj)) return hash.get(obj);
+    let cloneObj = new obj.constructor();
+    // 找到的是所属类原型上的constructor,而原型上的 constructor指向的是当前类本身
+    hash.set(obj, cloneObj);
+    for (let key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        // 实现一个递归拷贝
+        cloneObj[key] = deepClone(obj[key], hash);
+      }
+    }
+    return cloneObj;
+  }
+  
+  
+  const changeArr = (A, B) => {
+    A.forEach(x => {
+  
+      B.forEach(y => {
+        x.children[1] = deepClone(y.children[1])
+      })
+    })
+    return A
+  }
+  
+  console.log(changeArr(BL(arr), BL(doingArr))
+  )
