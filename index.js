@@ -312,3 +312,13 @@ let bindName  =  bindTest().myBind(obj1);
 console.log(bindName()) // LLF
 
 
+
+// todo 深拷贝
+
+let obj1 = {a:1};
+
+let obj2 = obj1;
+
+obj2.a = 4;
+
+console.log(obj1.a); // 4
