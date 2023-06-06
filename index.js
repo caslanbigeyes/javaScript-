@@ -717,3 +717,6 @@ const arr = [
   
   console.log(changeArr(BL(arr), BL(doingArr))
   )
+
+
+

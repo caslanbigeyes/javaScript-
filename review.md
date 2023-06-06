@@ -627,3 +627,29 @@ var 声明的全局变量和函数都能成为windows对象的属性和方法 �
 
 
 
+# 13. 前端面试 (方应杭)
+
+#### 1. react vue 区别 immer.js
+
+vue defineProperty proxy 区别 : 使用 proxy 性能下降 
+
+
+#### 2. vue 插槽
+
+https://juejin.cn/post/6844903812130422792
+
+
+#### 3. react 的diff算法  (100行)和vue的diff算法有什么区别
+
+看三五篇博客  寻找出公共部分
+
+#### 4. react router 如何实现路由守卫
+
+react router 路由守卫 loader 属性
+vue 路由守卫 beforeEach  beforeEnter 全局
+
+
+
+#### 5. 你在项目中遇到什么问题
+
+二分法 debugger 没有解决不了的问题, 如果有问题 当天我都会去解决 没有过不去的坎
