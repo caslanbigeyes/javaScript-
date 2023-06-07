@@ -653,3 +653,12 @@ vue 路由守卫 beforeEach  beforeEnter 全局
 #### 5. 你在项目中遇到什么问题
 
 二分法 debugger 没有解决不了的问题, 如果有问题 当天我都会去解决 没有过不去的坎
+
+
+
+
+# 14.红绿灯问题
+
+function red(){
+    console.log(red)
+}
