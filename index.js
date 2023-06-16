@@ -762,4 +762,189 @@ const taskLight = async () => {
   }
 }
 
-taskLight()
+// taskLight()
+
+
+
+// 请求5s未完成就终止
+
+
+
+const funcWait = (task, timer) => {
+  let wait = new Promise((reject) => {
+    setTimeout(() => {
+      reject('请求5s已经超时了')
+    }, timer);
+  })
+  return Promise.race([wait, task()]);
+}
+
+
+
+function task1() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve('请求成功');
+    }, (4000));
+  })
+}
+
+function task2() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve("请求超时");
+    }, (6000));
+  })
+}
+
+funcWait(task1, 5000).then(res => {
+  console.log(res, '11')
+})
+
+
+
+// todo 实现一个深拷贝
+
+function deepClone(obj, hash = new WeakMap()) {
+  // 处理null或者undefined
+  if (obj === null) return obj;
+  // 处理日期类型
+  if (obj instanceof Date) return new Date(obj);
+  // 处理正则类型
+  if (obj instanceof RegExp) return new RegExp(obj);
+  // 普通值或函数不需要深拷贝
+  if (typeof obj !== "object") return obj;
+  // 对象进行深拷贝
+  if (hash.get(obj)) return hash.get(obj);
+  let cloneObj = new obj.constructor();
+  // 找到的是所属类原型上的constructor,而原型上的 constructor指向的是当前类本身
+  hash.set(obj, cloneObj);
+  for (let key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      // 实现一个递归拷贝
+      cloneObj[key] = deepClone(obj[key], hash);
+    }
+  }
+  return cloneObj;
+}
+
+
+let o1 = { a: 1 };
+let o2 = deepClone(o1)
+
+o2.a = 'hhhh'
+console.log(o1, '01', o2)
+
+
+// todo 写一个防抖节流
+const debounceFunc1 = (func, ...args) => {
+  let timer = null
+  return function () {
+    clearInterval(timer)
+    timer = setTimeout(() => {
+      func.call(this)
+    }, args);
+  }
+}
+
+const trotttleFunc = (func, timer) => {
+  let start = new Date().getTime();
+  let that = this;
+  return function (args) {
+    let current = new Date().getTime();
+    if (current - start > timer) {
+      func.call(that, ...args);
+    } else {
+      setTimeout(() => {
+        func.call(that, ...args);
+      }, timer);
+    }
+    start = current;
+  }
+}
+
+
+
+function debounceTest1() {
+  console.log('debounce1')
+}
+
+debounceFunc1(debounceTest1, 300)
+
+
+// ES6 常用属性  map set  promise async await generator
+
+
+// 同步操作变成异步操作
+
+function asyncTest1() {
+  setTimeout(() => {
+    console.log(111)
+  }, 3000)
+}
+
+function asyncTest2() {
+  setTimeout(() => {
+    console.log(222)
+  }, 1000)
+}
+asyncTest1();
+asyncTest2();
+
+
+
+// todo: defineProperty 
+
+
+
+let xiaozhao = {
+  age: 18,
+  hobby: ['篮球', '足球']
+}
+
+let $vm = {};
+definePropertyFunc(xiaozhao)
+function definePropertyFunc(obj) {
+  Object.keys(obj).forEach(key => {
+    Object.defineProperty($vm, key, {
+      enumerable: true,
+      configurable: true,
+      writeable: true,
+      get() {
+        return obj[key];
+      },
+      set(newVal) {
+        obj[key] = newVal;
+      }
+    })
+  })
+}
+
+console.log($vm.age, 'vm', $vm.hobby)
+
+
+// todo: proxy
+
+
+let data2 = {
+  msg: 'hello',
+  count: 0
+}
+
+//模拟 Vue 实例
+let vm2 = new Proxy(data2, {
+  get(target, key) {
+    console.log('get,key:', key, target[key])
+    return target[key]
+  },
+  set(target, key, newValue) {
+    console.log('set,key:', key, newValue)
+    if (target[key] === newValue) {
+      return
+    }
+    target[key] = newValue
+  }
+})
+//测试
+vm2.msg = 'Hello World4343433'
+console.log(vm2.msg, "222222222222")
