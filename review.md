@@ -641,6 +641,25 @@ https://juejin.cn/post/6844903812130422792
 
 #### 3. react 的diff算法  (100行)和vue的diff算法有什么区别
 
+react diff算法:
+1. 只对比同层级节点,如果DOM节点跨层级移动. 则不复用
+2. 用key来构建一个老节点的map,复用一个后从map里删除
+3. lastPlaceIndex 表示最后一个不需要移动节点的索引
+4. 移动时的原则尽量少量的移动, 如果有一个必须要动, 新地位高的不动, 低的动
+
+相同点
+1. 都是两组虚拟dom的对比, fiber和虚拟dom的对比
+2. 只对同级节点进行对比, 简化了算法复杂度
+3. 都是用key作为唯一标识, 进行查找, 只有key和标签类型相同才会复用老节点
+4. 遍历前都会根据老的节点构建一个map, 方便根据key快速查找
+
+不同点
+1. react在进行diff遍历的时候,只对修改的节点进行记录, 形成effect list, 最后才根据effect list 进行真实dom的修改, 修改时先删除, 然后更新与移动, 最后进行插入
+2. vue 在遍历的时候就进行了真实dom insertBefore 的方法, 修改了真实 dom, 最后做的真实dom删除操作
+3. react 采用单指针从左向右进行遍历
+4. vue 采用双指针, 从两头向中间进行遍历
+5. react的虚拟diff比较简单, vue中间做了优化处理 最长递增子序列,相对复杂
+
 看三五篇博客  寻找出公共部分
 
 #### 4. react router 如何实现路由守卫
@@ -726,3 +745,54 @@ Math.floor(e.target.scrollTop/50)  endIndex 为startIndex+总高度
 
 eTag 是一个标记 类似md5 文件改动就变了
 
+
+
+8. webpack 个性化配置：拆包；less，sass 处理；打包加速优化；dll plugins；图片资源压缩
+
+
+首先 webpack 5更新了什么?
+
+1. 清除输出目录
+
+
+                module.exports = {
+                    output:{
+                        clean:true
+                    }
+                }
+
+2. top-level-await
+
+
+                module.exports = {
+                    experiments:{
+                        topLevelAwait:true
+                    }
+                }
+
+3. webpack5对模块的合并、作用域提升、tree shaking等处理更加智能
+
+4. 打包缓存开箱即用
+
+                const path = require("path");
+                module.exports = {
+                    cache:{
+                        // 缓存类型，支持：memory、filesystem
+                        type:''filesystem
+                        // 缓存目录，仅类型为filsystem有效
+                        cacheDirectory:path.resolve(__dirname,'node_modules/.cache/webpack')
+                    }
+                }
+
+5. 资源模块 天生支持 (不需要那些css loader file loader)
+
+
+
+9. 四个盒子每个盒子width:25% , 最后一个挤下去了, 1. 可以给父级加一个 font-size:0 2.设置父级display:flex , 字级设置flex:1 , 特别的可以设置width
+
+
+10. 1px 问题解决方案 
+1.0.5px解决方案
+2.用图片代替边框
+3,background渐变
+4.设置viewport
