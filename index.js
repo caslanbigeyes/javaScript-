@@ -948,3 +948,28 @@ let vm2 = new Proxy(data2, {
 //测试
 vm2.msg = 'Hello World4343433'
 console.log(vm2.msg, "222222222222")
+
+
+
+// todo: new操作符
+var Person = function (name, age) {
+  this.name = name
+  this.age = age
+}
+
+Person.prototype.sayName = function () {
+  console.log(this.name)
+}
+
+
+
+
+var mockNew = function (constructor) {
+  var o = {};
+  constructor.apply(o, Array.prototype.slice.call(arguments, 1))
+  console.log(constructor.apply(o, Array.prototype.slice.call(arguments, 0)), '------', 222)
+  return o
+}
+
+var person1 = mockNew(Person, 'MeloGuo', 22)
+console.log(person1,'alllf')

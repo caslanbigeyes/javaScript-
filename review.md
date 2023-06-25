@@ -817,3 +817,54 @@ rem就是设置不同机型下, 不同字体的大小适应
 
 > iphone6 宽度750px 1rem =1px
 > iphone5 宽度640PX 640/750 = 0.85px 1rem = 0.85px 
+
+
+12. 单点登陆实现
+> 1. 父域cookie (不支持跨主域名)
+> 2. 认证中心
+> 3. LocalStorage 跨域 (前端实现 通过iframe+postMessage) 将同一份token写入多个域下的localStorage中 , 每次请求接口之前都去localStorage中读取
+
+关键代码如下:
+                // 获取 token
+                var token = result.data.token;
+
+                // 动态创建一个不可见的iframe，在iframe中加载一个跨域HTML
+                var iframe = document.createElement("iframe");
+                iframe.src = "http://app1.com/localstorage.html";
+                document.body.append(iframe);
+                // 使用postMessage()方法将token传递给iframe
+                setTimeout(function () {
+                    iframe.contentWindow.postMessage(token, "http://app1.com");
+                }, 4000);
+                setTimeout(function () {
+                    iframe.remove();
+                }, 6000);
+
+                // 在这个iframe所加载的HTML中绑定一个事件监听器，当事件被触发时，把接收到的token数据写入localStorage
+                window.addEventListener('message', function (event) {
+                    localStorage.setItem('token', event.data)
+                }, false);
+
+
+
+
+13. new操作符具体做了啥?
+1.创建一个新的对象obj
+2.将对象与构造函数通过原型链连接起来
+3.将构造函数的this绑定到新建的对象obj上
+4.根据构造函数返回类型判断,原始值忽略,新对象正常处理
+
+
+                function mockNew (constructor, ...args) {
+                const isPrimitive = result => {
+                    // 如果result为值类型则返回true
+                    // 如果result为引用类型则返回false    
+                }
+
+                const o = Object.create(constructor.prototype)
+                const result = constructor.apply(o, args)
+                
+                return isPrimitive(result) ? o : result
+                }
+
+
