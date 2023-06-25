@@ -123,3 +123,10 @@ function flushCallbacks() {
 // 否则就可能出现一直循环的情况，
 // 所以需要将 callbacks 复制一份出来然后清空，再遍历备份列表执行回调
 
+
+
+/* 
+nextTick  个人理解这个是利用 事件循坏进行异步操作的,使用promise.then() 将回调函数放到异步任务队列中, 设置pending 状态锁, 判断当前队列中是否存在一个nextTick的任务, 当前任务队列执行完之后才能执行, 避免执行多次
+碰到当前浏览器不支持promise的话, 就会放入宏任务队列中, 按照优先级来依次   setImmediate、MessageChannel、setTimeout。
+
+*/

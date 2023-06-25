@@ -1,0 +1,48 @@
+/* 
+1. 宽度固定 右边自适应
+*/
+/* .father{
+    overflow: hidden;
+}
+
+.son1{
+    width: 300px;
+    float: left;
+    background: red;
+    height: 400px;
+}
+
+.son2{
+    height: 200px;
+    background: yellow;
+    margin-left: 310px;
+} */
+
+
+
+/* 
+2. 浮动+BFC
+*/
+
+.son1{
+    width: 300px;
+    float: left;
+    background: red;
+    height: 400px;
+}
+
+.son2{
+    height: 200px;
+    background: yellow;
+    margin-left: 310px;
+    overflow: hidden;
+}
+
+
+/* 
+3. 利用绝对定位
+*/
+
+/* 
+4. flex布局
+*/

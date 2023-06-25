@@ -796,3 +796,24 @@ eTag 是一个标记 类似md5 文件改动就变了
 2.用图片代替边框
 3,background渐变
 4.设置viewport
+
+
+11. html header 头部标签；rem 实现，一般 H5 使用，PC 没咋使用（media）；
+1.加入meta标签
+等于告诉浏览器网页宽度等于设备屏幕宽度, 且不进行缩放
+
+2.响应式页面的实现
+一种是栅格布局, 一种是bootstrap, 一种是媒体查询(设置不同尺寸的页面不同样式)
+rem就是设置不同机型下, 不同字体的大小适应
+
+> 利用Js获取设备屏幕的宽度，并根据屏幕的宽度动态改变根元素html的font-siz属性的作用
+
+                //获取html元素
+                var html = document.getElementsByTagName('html')[0]; 
+                //屏幕的宽度（兼容处理）
+                var w = document.documentElement.clientWidth || document.body.clientWidth;
+                //750这个数字是根据你的设计图的实际大小来的，所以值具体根据设计图的大小
+                html.style.fontSize = w / 750 + "px";
+
+> iphone6 宽度750px 1rem =1px
+> iphone5 宽度640PX 640/750 = 0.85px 1rem = 0.85px 
