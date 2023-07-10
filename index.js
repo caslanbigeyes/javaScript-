@@ -972,4 +972,123 @@ var mockNew = function (constructor) {
 }
 
 var person1 = mockNew(Person, 'MeloGuo', 22)
-console.log(person1,'alllf')
+console.log(person1, 'alllf')
+
+
+
+// var threeSum = function (nums) {
+//   // for循环 结合双指针⬅做
+//   let left = 0;
+//   let right = nums.length - 1;
+//   for (let i = 0; i < nums.length; i++) {
+//     while (left < right) {
+//       if (nums[left] + nums[right] + nums[i] === 0) {
+//         return [nums[left], nums[right], nums[i]]
+//       }
+//       left++
+//     }
+//   }
+//   return []
+// };
+
+// console.log(threeSum([54, 4, 5, 1, 0, -1]), '--------')
+
+// 两数之和
+
+var twoSum = (nums, target) => {
+  let res = {}
+  for (let i = 0; i < nums.length; i++) {
+    res[target - nums[i]] = nums[i]
+
+  }
+  console.log(res)
+  for (let j = 0; j < nums.length; j++) {
+    console.log(res[nums[j]])
+    if (res[nums[j]] !== undefined) {
+      return [nums[j], res[nums[j]]]
+    }
+  }
+}
+
+
+// console.log(twoSum([1, 2, 3, 4, 5], 8), 'twoSum([1,2,3,4,5],8)')
+
+
+
+// 三数之和 为0
+
+var threeSum = function (nums) {
+  const result = [];
+
+  // 将数组排序
+  nums.sort((a, b) => a - b);
+
+  const length = nums.length;
+
+  // 循环遍历数组
+  for (let i = 0; i < length - 2; i++) {
+    // 如果当前元素与前一个元素相同，则跳过，避免重复解
+    if (i > 0 && nums[i] === nums[i - 1]) {
+      continue;
+    }
+
+    let left = i + 1;
+    let right = length - 1;
+
+    // 使用双指针法来寻找和为 0 的三元组
+    while (left < right) {
+      const sum = nums[i] + nums[left] + nums[right];
+
+      if (sum === 0) {
+        result.push([nums[i], nums[left], nums[right]]);
+
+        // 跳过重复元素
+        while (left < right && nums[left] === nums[left + 1]) {
+          left++;
+        }
+        while (left < right && nums[right] === nums[right - 1]) {
+          right--;
+        }
+
+        // 移动指针
+        left++;
+        right--;
+      } else if (sum < 0) {
+        left++;
+      } else {
+        right--;
+      }
+    }
+  }
+
+  return result;
+};
+
+
+console.log(threeSum([1, 2, 3, 4, 5, 6, -2, 0]), 2222)
+
+
+// 给定一个仅包含数字 2-9 的字符串，返回所有它能表示的字母组合。答案可以按 任意顺序 返回。
+// 给出数字到字母的映射如下（与电话按键相同）。注意 1 不对应任何字母。
+
+var letterCombinations = function(digits) {
+  if(!digits) return [];
+  const mark = [
+      [''],
+      ['a','b','c'],
+      ['d','e','f'],
+      ['g','h','i'],
+      ['j', 'k', 'l'],
+      ['m', 'n', 'o'],
+      ['p', 'q', 'r', 's'],
+      ['t', 'u', 'v'],
+      ['w', 'x', 'y', 'z']
+  ]
+  console.log(digits.split(''),1111111)
+
+  for(let i = 1;i<digits.split('').length;i++){
+    console.log(mark[i],'i')
+  }
+};
+
+console.log(letterCombinations('23'),'3232222')

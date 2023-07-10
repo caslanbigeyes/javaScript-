@@ -24,11 +24,23 @@
 2. 浮动+BFC
 */
 
+.father{
+    /* overflow: hidden; */
+    background: green;
+    height: 400px;
+    opacity: 1;
+    /* position: relative; */
+}
+
+
 .son1{
     width: 300px;
     float: left;
     background: red;
     height: 400px;
+    opacity: 0.3;
+    z-index: 99;
+    position: relative;
 }
 
 .son2{
