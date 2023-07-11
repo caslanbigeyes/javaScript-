@@ -1071,24 +1071,59 @@ console.log(threeSum([1, 2, 3, 4, 5, 6, -2, 0]), 2222)
 // 给定一个仅包含数字 2-9 的字符串，返回所有它能表示的字母组合。答案可以按 任意顺序 返回。
 // 给出数字到字母的映射如下（与电话按键相同）。注意 1 不对应任何字母。
 
-var letterCombinations = function(digits) {
-  if(!digits) return [];
+var letterCombinations = function (digits) {
+  if (!digits) return [];
   const mark = [
-      [''],
-      ['a','b','c'],
-      ['d','e','f'],
-      ['g','h','i'],
-      ['j', 'k', 'l'],
-      ['m', 'n', 'o'],
-      ['p', 'q', 'r', 's'],
-      ['t', 'u', 'v'],
-      ['w', 'x', 'y', 'z']
+    [''],
+    ['a', 'b', 'c'],
+    ['d', 'e', 'f'],
+    ['g', 'h', 'i'],
+    ['j', 'k', 'l'],
+    ['m', 'n', 'o'],
+    ['p', 'q', 'r', 's'],
+    ['t', 'u', 'v'],
+    ['w', 'x', 'y', 'z']
   ]
-  console.log(digits.split(''),1111111)
+  console.log(digits.split(''), 1111111)
 
-  for(let i = 1;i<digits.split('').length;i++){
-    console.log(mark[i],'i')
+  for (let i = 1; i < digits.split('').length; i++) {
+    console.log(mark[i], 'i')
   }
 };
 
-console.log(letterCombinations('23'),'3232222')
+console.log(letterCombinations('23'), '3232222')
+
+
+
+/* 
+给定 nums = [2, 7, 11, 15], target = 9
+
+因为 nums[0] + nums[1] = 2 + 7 = 9
+所以返回 [0, 1]
+*/
+
+let nums = [2,7,11,15]
+let target= 9
+
+const findIndex = (nums, target) => {
+  for (let i = 0; i < nums.length; i++) {
+    for (let j = i; j < nums.length; j++) {
+      if(nums[i]+nums[j]===target){
+        return [i,j]
+      }
+    }
+  }
+  return []
+}
+
+const findIndex2 = (nums,target)=>{
+  let map = new Map();
+  for(let i = 0;i<nums.length;i++){
+
+    if(map.has(target-nums[i])){
+      return [map.get(target-nums[i]),i]
+    }
+    map.set(nums[i],i)
+  }
+}
+console.log(findIndex2(nums,target),222)
