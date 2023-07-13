@@ -1068,6 +1068,27 @@ var threeSum = function (nums) {
 console.log(threeSum([1, 2, 3, 4, 5, 6, -2, 0]), 2222)
 
 
+// 全排列 'abc'  => [abc,acb,bac,bca,cab,cba]
+
+const whileQueue = (str) => {
+  let res = [];
+  if (str.length > 1) {
+    for (let i = 0; i < str.length; i++) {
+      let left = str[i];
+      let rest = str.slice(0, i) + str.slice(i + 1, str.length);
+      let restRes = whileQueue(rest); // 余下的递归
+      // 组合在一起
+      for (let j = 0; j < restRes.length; j++) {
+        let a = left + restRes[j];
+        res.push(a);
+      }
+    }
+  } else {
+    res.push(str);
+  }
+  return res;
+}
+
 // 给定一个仅包含数字 2-9 的字符串，返回所有它能表示的字母组合。答案可以按 任意顺序 返回。
 // 给出数字到字母的映射如下（与电话按键相同）。注意 1 不对应任何字母。
 
@@ -1088,42 +1109,81 @@ var letterCombinations = function (digits) {
 
   for (let i = 1; i < digits.split('').length; i++) {
     console.log(mark[i], 'i')
+
+
   }
-};
+  // 思路 电话号码 组合
+  /* 
+  
+  
+  */
+  var letterCombinations = (digits) => {
+    if (digits.length == 0) return [];
+    const mapArr = {
+      2: "abc",
+      3: "def",
+      4: "ghi",
+      5: "jkl",
+      6: "mno",
+      7: "pqrs",
+      8: "tuv",
+      9: "wxyz",
+    };
+    let res = [];
 
-console.log(letterCombinations('23'), '3232222')
 
 
-
-/* 
-给定 nums = [2, 7, 11, 15], target = 9
-
-因为 nums[0] + nums[1] = 2 + 7 = 9
-所以返回 [0, 1]
-*/
-
-let nums = [2,7,11,15]
-let target= 9
-
-const findIndex = (nums, target) => {
-  for (let i = 0; i < nums.length; i++) {
-    for (let j = i; j < nums.length; j++) {
-      if(nums[i]+nums[j]===target){
-        return [i,j]
+    const dfs = (str, digits) => {
+      const calcArr = digits.split('').map(i => mapArr[i]);
+      let strAll = '';
+      for (let i = 0; i < calcArr.length; i++) {
+        strAll += calcArr[i];
+        dfs(strAll, digits.slice(1))
+        str.slice(0, -1)
       }
     }
-  }
-  return []
-}
 
-const findIndex2 = (nums,target)=>{
-  let map = new Map();
-  for(let i = 0;i<nums.length;i++){
+    dfs("", digits);
+    return res;
+  };
 
-    if(map.has(target-nums[i])){
-      return [map.get(target-nums[i]),i]
+
+
+  console.log(letterCombinations('23'), '3232222')
+
+
+
+  /* 
+  给定 nums = [2, 7, 11, 15], target = 9
+  
+  因为 nums[0] + nums[1] = 2 + 7 = 9
+  所以返回 [0, 1]
+  */
+
+  let nums = [2, 7, 11, 15]
+  let target = 9
+
+  const findIndex = (nums, target) => {
+    for (let i = 0; i < nums.length; i++) {
+      for (let j = i; j < nums.length; j++) {
+        if (nums[i] + nums[j] === target) {
+          return [i, j]
+        }
+      }
     }
-    map.set(nums[i],i)
+    return []
   }
-}
-console.log(findIndex2(nums,target),222)
+
+  const findIndex2 = (nums, target) => {
+    let map = new Map();
+    for (let i = 0; i < nums.length; i++) {
+
+      if (map.has(target - nums[i])) {
+        return [map.get(target - nums[i]), i]
+      }
+      map.set(nums[i], i)
+    }
+  }
+  console.log(findIndex2(nums, target), 222)
+
+
